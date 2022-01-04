@@ -1,5 +1,8 @@
 const {BrowserWindow} = require('electron');
 
+function hello(){
+    console.log("Hello mundo");
+}
 
 let window;
 function createWindow(){
@@ -17,5 +20,7 @@ function createWindow(){
 }
 
 module.exports ={
-    createWindow
+
+    createWindow,
+    hello
 };

@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/virutasoft/electronLinkSaver#readme",
   "dependencies": {
-    "electron": "^16.0.5",
+    "electron": "^8.2.1",
     "electron-reload": "^2.0.0-alpha.1",
     "promise-mysql": "^5.0.4"
   }
