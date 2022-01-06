@@ -3,7 +3,7 @@ const productForm = document.getElementById('productForm');
 const {remote} = require('electron');
 const main = remote.require('./main');
 
-main.hello()
+main.createProduct();
 
 const productName = document.getElementById('name');
 const productPrice = document.getElementById('price');
@@ -21,4 +21,7 @@ productForm.addEventListener('submit', (e)=>{
     // console.log(productName.value);
     // console.log(productPrice.value);
     // console.log(productDescription.value);
+
+
+    main.createProduct(newProduct);
 });

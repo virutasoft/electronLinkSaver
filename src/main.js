@@ -1,8 +1,23 @@
-const {BrowserWindow} = require('electron');
+const {BrowserWindow, Notification} = require('electron');
+const {getConnection} = require('./database');
 
-function hello(){
-    console.log("Hello mundo");
+
+async function createProduct(product){
+    try {
+        const conn = await getConnection();
+        product.price = parseFloat(product.price);
+        console.log(product);
+        const result = await conn.query('INSERT INTO product SET ?', product);
+        console.log(result);
+        new Notification({
+           title: 'Electron & MySQL' ,
+           body: 'Nuevo producto agregado satisfactoriamente.'
+        }).show();
+    } catch (error) {
+        console.log(error)
+    }
 }
+
 
 let window;
 function createWindow(){
@@ -22,5 +37,5 @@ function createWindow(){
 module.exports ={
 
     createWindow,
-    hello
+    createProduct
 };
