@@ -8,16 +8,26 @@ async function createProduct(product){
         product.price = parseFloat(product.price);
         console.log(product);
         const result = await conn.query('INSERT INTO product SET ?', product);
-        console.log(result);
+
         new Notification({
            title: 'Electron & MySQL' ,
            body: 'Nuevo producto agregado satisfactoriamente.'
         }).show();
+
+    product.id = result.insertId;
+    return product;
+
     } catch (error) {
         console.log(error)
     }
 }
 
+async function getProducts(){
+    const conn = getConnection();
+    const results = (await conn).query('SELECT * FROM product ORDER BY id DESC');
+    //console.log(results);
+    return results;
+}
 
 let window;
 function createWindow(){
@@ -37,5 +47,6 @@ function createWindow(){
 module.exports ={
 
     createWindow,
-    createProduct
+    createProduct,
+    getProducts
 };
