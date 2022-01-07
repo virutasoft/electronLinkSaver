@@ -23,17 +23,30 @@ async function createProduct(product){
 }
 
 async function getProducts(){
-    const conn = getConnection();
+    const conn = await getConnection();
     const results = (await conn).query('SELECT * FROM product ORDER BY id DESC');
     //console.log(results);
+    return results;
+}
+
+async function deleteProduct(id){
+    const conn = await getConnection();
+    const results = await conn.query('DELETE FROM product WHERE id= ?', id);
+    console.log(results);
+    new Notification({
+        title:'Borrado de ítem',
+        body:'Ítem eliminado correctamente de la base de datos.'
+    }).show();
+    productForm.reset();
+        productName.focus();
     return results;
 }
 
 let window;
 function createWindow(){
     window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1024,
+        height: 768,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -48,5 +61,6 @@ module.exports ={
 
     createWindow,
     createProduct,
-    getProducts
+    getProducts,
+    deleteProduct
 };

@@ -27,28 +27,70 @@ productForm.addEventListener('submit', async(e)=>{
     const result = await main.createProduct(newProduct);
     console.log(result);
 
-    getProducts();
+    productForm.reset();
+    productName.focus();
+
+    await getProducts();
 });
+
+async function deleteProduct(id){
+    const response = await confirm('Está seguro de borrar el elemento?');
+    if (response) {
+        await main.deleteProduct(id);
+        
+        await getProducts();
+        
+    }
+    return;
+
+
+    
+};
+
 
 function renderProducts(products){
     productsList.innerHTML = '';
     products.forEach(product => {
         productsList.innerHTML += `
-        <div class="card card-body my-2 animate__animated animate__fadeInUp">
-            <h4 class="capitalize">Producto:</br><strong><span>${product.name}</span></strong></h4>
-            <p>Descripción:</br>${product.description}</p>
-            <h3>Precio:</br><span>&#36;${product.price}</span></h3>
-            <p>
-                <button class="btn btn-outline-danger">
-                    BORRAR
-                </button>
-                <button class="btn btn-outline-warning">
-                    EDITAR
-                </button>
-            </p>
-        </div>`;
+        <div class="card border-light my-2  mb-3 animate__animated animate__fadeInUp">
+        <div class="card-header">
+            Tarjeta de producto
+        </div>
+        <div class="card-body">
+        <h3 class="card-title text-info">Producto:</h3>
+        <h3 class="">${product.name}</h3>
+          <p class="card-text"><span class="text-info my-0">Descripción:</span></br>${product.description}</p>
+          <h3 class="card-text text-info">Precio:</br><span>&#36;${product.price}</span></h3>
+          <p>
+          <p class="card-text">
+              <button class="btn btn-outline-danger" onclick="deleteProduct('${product.id}');">
+                  BORRAR
+              </button>
+              <button class="btn btn-outline-warning">
+                  EDITAR
+              </button>
+          </p>
+          
+        </div>
+      </div>
+        `;
+        // <div class="card card-body my-2 animate__animated animate__fadeInUp">
+        //     <h4 class="capitalize">Producto:</br><strong><span>${product.name}</span></strong></h4>
+        //     <p>Descripción:</br>${product.description}</p>
+        //     <h3>Precio:</br><span>&#36;${product.price}</span></h3>
+        //     <p>
+        //         <button class="btn btn-outline-danger">
+        //             BORRAR
+        //         </button>
+        //         <button class="btn btn-outline-warning">
+        //             EDITAR
+        //         </button>
+        //     </p>
+        // </div>`;
     });
 }
+
+
 
 const getProducts = async () =>{
     products = await main.getProducts();
