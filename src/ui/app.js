@@ -47,6 +47,13 @@ async function deleteProduct(id){
     
 };
 
+async function editProduct(id){
+    const product = await main.getProductById(id);
+    productName.value = product.name;
+    productDescription.value = product.description;
+    productPrice.value = product.price;
+};
+
 
 function renderProducts(products){
     productsList.innerHTML = '';
@@ -66,7 +73,7 @@ function renderProducts(products){
               <button class="btn btn-outline-danger" onclick="deleteProduct('${product.id}');">
                   BORRAR
               </button>
-              <button class="btn btn-outline-warning">
+              <button class="btn btn-outline-warning" onclick="editProduct('${product.id}');">
                   EDITAR
               </button>
           </p>

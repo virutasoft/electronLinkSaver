@@ -37,10 +37,20 @@ async function deleteProduct(id){
         title:'Borrado de ítem',
         body:'Ítem eliminado correctamente de la base de datos.'
     }).show();
-    productForm.reset();
+        productForm.reset();
         productName.focus();
     return results;
 }
+
+async function getProductById(id){
+
+    const conn = await getConnection();
+    const result = await conn.query('SELECT * FROM product WHERE id = ?', id);
+    
+    return result[0];
+
+}
+
 
 let window;
 function createWindow(){
@@ -62,5 +72,6 @@ module.exports ={
     createWindow,
     createProduct,
     getProducts,
-    deleteProduct
+    deleteProduct,
+    getProductById
 };

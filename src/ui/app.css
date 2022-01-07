@@ -16,3 +16,6 @@ span{
     text-align: center;
     color: lightgreen;
 }
+input, textarea, button{
+    text-transform: uppercase;
+}
