@@ -1,4 +1,4 @@
-const productForm = document.getElementById('productForm');
+
 
 const {remote} = require('electron');
 const { getConnection } = require('../database');
@@ -6,6 +6,7 @@ const main = remote.require('./main');
 
 main.createProduct();
 
+const productForm = document.getElementById('productForm');
 const productName = document.getElementById('name');
 const productPrice = document.getElementById('price');
 const productDescription = document.getElementById('description');
@@ -37,14 +38,9 @@ async function deleteProduct(id){
     const response = await confirm('Está seguro de borrar el elemento?');
     if (response) {
         await main.deleteProduct(id);
-        
-        await getProducts();
-        
+        await getProducts();    
     }
-    return;
-
-
-    
+    return;    
 };
 
 async function editProduct(id){

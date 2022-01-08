@@ -6,7 +6,7 @@ async function createProduct(product){
     try {
         const conn = await getConnection();
         product.price = parseFloat(product.price);
-        console.log(product);
+        
         const result = await conn.query('INSERT INTO product SET ?', product);
 
         new Notification({
@@ -32,13 +32,13 @@ async function getProducts(){
 async function deleteProduct(id){
     const conn = await getConnection();
     const results = await conn.query('DELETE FROM product WHERE id= ?', id);
-    console.log(results);
+    //console.log(results);
     new Notification({
         title:'Borrado de ítem',
         body:'Ítem eliminado correctamente de la base de datos.'
     }).show();
-        productForm.reset();
-        productName.focus();
+        //productForm.reset();
+        //productName.focus();
     return results;
 }
 
