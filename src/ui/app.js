@@ -2,6 +2,7 @@
 
 const {remote} = require('electron');
 const { getConnection } = require('../database');
+const { getProductById } = require('../main');
 const main = remote.require('./main');
 
 main.createProduct();
@@ -10,9 +11,11 @@ const productForm = document.getElementById('productForm');
 const productName = document.getElementById('name');
 const productPrice = document.getElementById('price');
 const productDescription = document.getElementById('description');
-const productsList = document.getElementById("products")
+const productsList = document.getElementById("products");
 
 let products = [];
+let editingStatus = false;
+let editProductId = '';
 
 productForm.addEventListener('submit', async(e)=>{
     e.preventDefault();
@@ -23,15 +26,20 @@ productForm.addEventListener('submit', async(e)=>{
         description: productDescription.value
     }
 
+    if (!editingStatus) {
+        const result = await main.createProduct(newProduct);
+        console.log(result);
+    } else {
+        await main.updateProduct(editProductId, newProduct);
 
-
-    const result = await main.createProduct(newProduct);
-    console.log(result);
+        editingStatus = false;
+        editProductId = "";
+    }
 
     productForm.reset();
     productName.focus();
 
-    await getProducts();
+    getProducts();
 });
 
 async function deleteProduct(id){
@@ -48,6 +56,9 @@ async function editProduct(id){
     productName.value = product.name;
     productDescription.value = product.description;
     productPrice.value = product.price;
+
+    editingStatus = true;
+    editProductId = product.id;
 };
 
 

@@ -51,6 +51,15 @@ async function getProductById(id){
 
 }
 
+async function updateProduct(id, product){
+    const conn = await getConnection();
+    const result = await conn.query('UPDATE product SET ? WHERE id = ?',[product, id]);
+    new Notification({
+        title:'Modificaciones',
+        body:'Ítem editado correctamente.'
+    }).show();
+    //console.log(result);
+}
 
 let window;
 function createWindow(){
@@ -73,5 +82,6 @@ module.exports ={
     createProduct,
     getProducts,
     deleteProduct,
-    getProductById
+    getProductById,
+    updateProduct
 };
